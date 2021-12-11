@@ -10,7 +10,7 @@ export default{
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .login{
   color: red;
 }
