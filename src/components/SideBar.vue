@@ -18,7 +18,7 @@
         </svg>
       </div>
     </div>
-    <div class="logout">
+    <div class="logout" @click="logout">
       <svg>
         <use xlink:href="#icon-logout"></use>
       </svg>
@@ -28,9 +28,19 @@
 
 <script>
 import Avatar from "./Avatar"
+import request from '@/helpers/request'
 
 export default {
-  components: {Avatar}
+  components: {Avatar},
+  methods: {
+    logout() {
+      console.log('logout')
+      request('auth/logout')
+        .then(data => {
+          console.log(data)
+        })
+    }
+  }
 }
 </script>
 
@@ -47,6 +57,7 @@ export default {
 
   .main {
     margin-left: 10px;
+
     .item {
       margin-top: 15px;
       padding-top: 4px;
