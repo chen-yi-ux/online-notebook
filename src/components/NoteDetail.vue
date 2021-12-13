@@ -30,7 +30,7 @@
         </div>
         <div class="note-content">
           <textarea placeholder="输入内容，支持 markdown 语法"></textarea>
-<!--          <div class="preview markdown-body" v-html="previewContent"></div>-->
+          <!--          <div class="preview markdown-body" v-html="previewContent"></div>-->
         </div>
       </div>
     </div>
@@ -40,19 +40,30 @@
 <script>
 import SideBar from "./SideBar"
 import NoteSidebar from "./NoteSidebar"
-export default{
+import Auth from '@/apis/auth'
+
+export default {
   components: {NoteSidebar, SideBar},
-  data(){
+  data() {
     return {
       msg: this.$route.params.noteId
     }
-  }
+  },
+  created() {
+    Auth.getInfo()
+      .then(res => {
+        if (!res.isLogin) {
+          this.$router.push({path: '/login'})
+        }
+      })
+  },
 }
 </script>
 
 <style lang="less" scoped>
 @import url(../assets/css/NoteDetail.less);
-svg{
+
+svg {
   width: 20px;
   height: 20px;
 }

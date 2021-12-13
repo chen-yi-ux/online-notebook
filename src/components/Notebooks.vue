@@ -51,19 +51,27 @@
 </template>
 
 <script>
-
 import SideBar from "./SideBar"
+import Auth from '@/apis/auth'
+
 export default {
   components: {SideBar},
-  data(){
-    return {
-    }
+  data() {
+    return {}
+  },
+  created() {
+    Auth.getInfo()
+      .then(res => {
+        if (!res.isLogin) {
+          this.$router.push({path: '/login'})
+        }
+      })
   },
   methods: {
-    onEdit(){
+    onEdit() {
       console.log('编辑')
     },
-    onDelete(){
+    onDelete() {
       console.log('删除')
     }
   }

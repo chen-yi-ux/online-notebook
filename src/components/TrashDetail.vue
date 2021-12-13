@@ -1,21 +1,31 @@
 <template>
   <div class="trash">
-    noteId: {{msg}}
+    noteId: {{ msg }}
   </div>
 </template>
 
 <script>
-export default{
+import Auth from '@/apis/auth'
+
+export default {
   data() {
     return {
       msg: this.$route.params.noteId
     }
-  }
+  },
+  created() {
+    Auth.getInfo()
+      .then(res => {
+        if (!res.isLogin) {
+          this.$router.push({path: '/login'})
+        }
+      })
+  },
 }
 </script>
 
 <style scoped>
-.trash{
+.trash {
   color: red;
 }
 </style>
