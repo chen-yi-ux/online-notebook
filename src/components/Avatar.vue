@@ -1,24 +1,36 @@
 <template>
-  <div class="avatar">
-    {{slug}}
+  <div class="avatar" :title="username">
+    {{ slug }}
   </div>
 </template>
 
 <script>
-export default{
-  data(){
+import Auth from '@/apis/auth'
+
+export default {
+  data() {
     return {
-      user: {
-        username: 'chenyi'
-      },
-      slug: 'c'
+      username: '未登录',
+    }
+  },
+  created() {
+    Auth.getInfo()
+      .then(res => {
+        if(res.isLogin){
+          this.username = res.data.username
+        }
+      })
+  },
+  computed: {
+    slug() {
+      return this.username.charAt(0)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.avatar{
+.avatar {
   display: inline-block;
   width: 40px;
   height: 40px;
