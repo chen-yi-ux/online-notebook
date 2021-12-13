@@ -31,7 +31,7 @@
               </svg>
             </div>
           </div>
-          <div class="note" v-bind:class="{error: login.isError}">{{login.notice}}</div>
+          <div class="note" v-bind:class="{error: login.isError}">{{ login.notice }}</div>
           <div class="button" @click="onLogin">登录</div>
           <div class="other">
             <span @click="showRegister">注册</span>
@@ -60,7 +60,7 @@
               </svg>
             </div>
           </div>
-          <div class="note" v-bind:class="{error: register.isError}">{{register.notice}}</div>
+          <div class="note" v-bind:class="{error: register.isError}">{{ register.notice }}</div>
           <div class="button" @click="onRegister">注册</div>
           <div class="other">
             <span @click="showLogin">登录</span>
@@ -72,6 +72,12 @@
 </template>
 
 <script>
+import request from "@/helpers/request"
+
+request('/auth/login', 'POST', {username: 'hunger', password: '123456'})
+  .then(data => {
+    console.log(data)
+  })
 
 export default {
   data() {
@@ -102,13 +108,13 @@ export default {
       this.isShowRegister = true
       this.isShowLogin = false
     },
-    onLogin(){
-      if(!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)){
+    onLogin() {
+      if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
         this.login.isError = true
         this.login.notice = '用户名3~15个字符，仅限于字母数字下划线中文'
         return
       }
-      if(!/^.{6,16}$/.test(this.login.password)){
+      if (!/^.{6,16}$/.test(this.login.password)) {
         this.login.isError = true
         this.login.notice = '密码长度为6~16个字符'
         return
@@ -117,13 +123,13 @@ export default {
       this.login.notice = ''
       console.log(`登录，用户名是：${this.login.username}，密码是：${this.login.password}`)
     },
-    onRegister(){
-      if(!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)){
+    onRegister() {
+      if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)) {
         this.register.isError = true
         this.register.notice = '用户名3~15个字符，仅限于字母数字下划线中文'
         return
       }
-      if(!/^.{6,16}$/.test(this.register.password)){
+      if (!/^.{6,16}$/.test(this.register.password)) {
         this.register.isError = true
         this.register.notice = '密码长度为6~16个字符'
         return
@@ -132,10 +138,10 @@ export default {
       this.register.notice = ''
       console.log(`注册，用户名是：${this.register.username}，密码是：${this.register.password}`)
     },
-    onShowPassword(){
+    onShowPassword() {
       this.type = 'password'
     },
-    onClosePassword(){
+    onClosePassword() {
       this.type = 'text'
     }
   }
