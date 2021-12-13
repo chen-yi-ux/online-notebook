@@ -1,10 +1,8 @@
 .page {
-  display: flex;
-  align-items: stretch;
-  height: 100vh;
-  .content{
-    flex: 1;
-    header {
+  flex: 1;
+
+  header {
+    div{
       width: 120px;
       border: 1px solid #2bb964;
       border-radius: 4px;
@@ -14,75 +12,85 @@
       margin-left: 20px;
       margin-top: 20px;
       cursor: pointer;
-
-      span {
-        margin-left: 10px;
-        font-size: 14px;
-      }
     }
-    main{
-      padding: 30px 100px;
-      .layout {
-        height: calc(100% - 150px);
-        margin: 0 auto;
-        h3 {
-          font-size: 16px;
-        }
 
-        .list {
-          background: #fafafa;
-          border-radius: 4px;
-          margin: 10px 20px;
-          overflow: hidden;
+    span {
+      margin-left: 10px;
+      font-size: 14px;
+    }
+  }
 
-          .notebook {
-            display: block;
-            cursor: pointer;
+  main {
+    padding: 30px 100px;
 
-            .item {
-              border-bottom: 1px solid #ebebeb;
-              padding: 12px 14px;
-              font-weight: bold;
-              color: #b3c0c0;
+    .layout {
+      height: calc(100% - 150px);
+      margin: 0 auto;
+
+      h3 {
+        font-size: 16px;
+      }
+
+      .list {
+        background: #fafafa;
+        border-radius: 4px;
+        margin: 10px 20px;
+        overflow: hidden;
+
+        .notebook {
+          display: block;
+          cursor: pointer;
+
+          .item {
+            border-bottom: 1px solid #ebebeb;
+            padding: 12px 14px;
+            font-weight: bold;
+            color: #b3c0c0;
+            display: flex;
+            justify-content: space-between;
+
+            .left {
               display: flex;
-              justify-content: space-between;
-              .left{
-                display: flex;
-                align-items: center;
-                .name {
-                  margin-left: 10px;
-                  color: #444444;
-                }
+              align-items: center;
 
-                .number {
-                  margin-left: 5px;
-                  font-size: 12px;
-                }
+              .name {
+                margin-left: 10px;
+                color: #444444;
               }
-              .right{
-                display: flex;
-                align-items: center;
-                .wrapper {
-                  float: right;
-                  margin-left: 10px;
-                  font-size: 12px;
-                }
+
+              .number {
+                margin-left: 5px;
+                font-size: 12px;
+              }
+            }
+
+            .right {
+              display: flex;
+              align-items: center;
+
+              .wrapper {
+                float: right;
+                margin-left: 10px;
+                font-size: 12px;
               }
             }
           }
-          .item:hover {
-            background: #e2fae8;
-          }
+        }
+
+        .item:hover {
+          background: #e2fae8;
         }
       }
     }
-    @media(max-width: 1000px){
-      main{
-        padding: 30px 30px;
-      }
+  }
+
+  @media (max-width: 1000px) {
+    main {
+      padding: 30px 30px;
     }
   }
 }
+
 
 .xxx {
   padding-top: 12px;

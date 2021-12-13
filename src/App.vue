@@ -173,6 +173,7 @@
           fill="#333333"></path>
       </symbol>
     </svg>
+    <SideBar/>
     <router-view/>
   </div>
 </template>
@@ -193,6 +194,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100%;
+  display: flex;
+  align-items: stretch;
 }
 
 body {

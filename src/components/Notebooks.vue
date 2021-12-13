@@ -1,38 +1,37 @@
 <template>
   <div class="page">
-    <SideBar/>
-    <div class="content">
-      <header @click="onCreate">
+    <header @click="onCreate">
+      <div>
         <svg>
           <use xlink:href="#icon-add"></use>
         </svg>
         <span>新建笔记本</span>
-      </header>
-      <div class="xxx"></div>
-      <main>
-        <div class="layout">
-          <h3>笔记本列表（{{ notebooks.length }}）</h3>
-          <div class="list">
-            <router-link to="/note/1" class="notebook" v-for="notebook in notebooks" :key="notebook.id">
-              <div class="item">
-                <div class="left">
-                  <svg>
-                    <use xlink:href="#icon-notebook1"></use>
-                  </svg>
-                  <span class="name">{{ notebook.title }}</span>
-                  <span class="number">({{ notebook.noteCounts }})</span>
-                </div>
-                <div class="right">
-                  <span class="wrapper">{{notebook.createdAtFriendly}}</span>
-                  <span class="wrapper" @click.stop.prevent="onEdit(notebook)">编辑</span>
-                  <span class="wrapper" @click.stop.prevent="onDelete(notebook)">删除</span>
-                </div>
+      </div>
+    </header>
+    <div class="xxx"></div>
+    <main>
+      <div class="layout">
+        <h3>笔记本列表（{{ notebooks.length }}）</h3>
+        <div class="list">
+          <router-link to="/note/1" class="notebook" v-for="notebook in notebooks" :key="notebook.id">
+            <div class="item">
+              <div class="left">
+                <svg>
+                  <use xlink:href="#icon-notebook1"></use>
+                </svg>
+                <span class="name">{{ notebook.title }}</span>
+                <span class="number">({{ notebook.noteCounts }})</span>
               </div>
-            </router-link>
-          </div>
+              <div class="right">
+                <span class="wrapper">{{ notebook.createdAtFriendly }}</span>
+                <span class="wrapper" @click.stop.prevent="onEdit(notebook)">编辑</span>
+                <span class="wrapper" @click.stop.prevent="onDelete(notebook)">删除</span>
+              </div>
+            </div>
+          </router-link>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
 </template>
 
