@@ -31,8 +31,10 @@
 <script>
 import Notebooks from '@/apis/notebooks'
 import Notes from '@/apis/notes'
+import Bus from '@/helpers/bus'
 
 export default {
+  props: ['curNote'],
   data() {
     return {
       notebooks: [],
@@ -48,6 +50,8 @@ export default {
         return Notes.getAll({notebookId: this.curBook.id})
       }).then(res => {
       this.notes = res.data
+      this.$emit('update:notes', this.notes)
+      Bus.$emit('update:notes', this.notes)
     })
   },
   methods: {
@@ -58,6 +62,7 @@ export default {
       Notes.getAll({notebookId})
         .then(res => {
           this.notes = res.data
+          this.$emit('update:notes', this.notes)
         })
     }
   }
