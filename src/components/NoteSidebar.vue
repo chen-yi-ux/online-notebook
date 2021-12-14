@@ -1,6 +1,6 @@
 <template>
   <div class="note-sidebar">
-    <span class="btn add-note">添加笔记</span>
+    <span class="btn add-note" @click="onAddNote">添加笔记</span>
     <el-dropdown class="notebook-title" placement="bottom" @command="handleCommand">
       <span class="el-dropdown-link">
         {{ curBook.title }}
@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     handleCommand(notebookId) {
+      console.log(notebookId)
       if (notebookId === 'trash') {
         return this.$router.push({path: '/trash'})
       }
@@ -64,6 +65,12 @@ export default {
           this.notes = res.data
           this.$emit('update:notes', this.notes)
         })
+    },
+    onAddNote(){
+      Notes.addNote({notebookId: this.curBook.id})
+      .then(res => {
+        this.notes.unshift(res.data)
+      })
     }
   }
 }

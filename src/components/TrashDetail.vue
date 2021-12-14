@@ -29,7 +29,7 @@
         <span>第一个笔记</span>
       </div>
       <div class="note-content">
-        <div class="preview markdown-body" v-html="compileMarkdown"></div>
+        <div class="preview markdown-body" v-html=""></div>
       </div>
     </div>
   </div>
