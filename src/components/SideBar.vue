@@ -2,21 +2,21 @@
   <div class="page">
     <div class="main">
       <Avatar/>
-      <div class="item select">
+      <router-link class="item" to="/note">
         <svg>
           <use xlink:href="#icon-note"></use>
         </svg>
-      </div>
-      <div class="item select">
+      </router-link>
+      <router-link class="item" to="/notebooks">
         <svg>
           <use xlink:href="#icon-notebook"></use>
         </svg>
-      </div>
-      <div class="item select">
+      </router-link>
+      <router-link class="item" to="/trash">
         <svg>
           <use xlink:href="#icon-trash"></use>
         </svg>
-      </div>
+      </router-link>
     </div>
     <div class="logout" @click="logout">
       <svg>
@@ -32,6 +32,10 @@ import Auth from '@/apis/auth'
 
 export default {
   components: {Avatar},
+  data(){
+    return {
+    }
+  },
   methods: {
     logout() {
       Auth.logout()
@@ -64,10 +68,10 @@ export default {
       cursor: pointer;
       display: block;
 
-      &.select {
-        box-shadow: 0 0 2px 2px #2bb964;
-        border-radius: 8px;
-      }
+    }
+    .router-link-active{
+      box-shadow: 0 0 2px 2px #2bb964;
+      border-radius: 8px;
     }
   }
 
