@@ -60,18 +60,18 @@ export default {
   flex-wrap: wrap;
 
   .main {
-    margin-left: 10px;
+    width: 100%;
 
     .item {
       margin-top: 15px;
       padding-top: 4px;
       cursor: pointer;
       display: block;
+      width: 80px;
 
     }
     .router-link-active{
-      box-shadow: 0 0 2px 2px #2bb964;
-      border-radius: 8px;
+      background: #e2fae8;
     }
   }
 

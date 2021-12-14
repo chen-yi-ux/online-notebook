@@ -28,7 +28,7 @@
       </div>
       <div class="note-content">
         <textarea placeholder="输入内容，支持 markdown 语法"></textarea>
-        <!--          <div class="preview markdown-body" v-html="previewContent"></div>-->
+<!--        <div class="preview markdown-body" v-html="previewContent"></div>-->
       </div>
     </div>
   </div>
