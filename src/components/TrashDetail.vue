@@ -9,27 +9,27 @@
         <div>标题</div>
       </div>
       <div class="notes">
-        <div>
-          <router-link to="/trash/1">
-            <span>11</span>
-            <span>22</span>
+        <div v-for="note in trashNotes" :key="note.id">
+          <router-link :to="`/trash?noteId=${note.id}`">
+            <span>{{note.createdAtFriendly}}</span>
+            <span>{{note.title}}</span>
           </router-link>
         </div>
       </div>
     </div>
     <div class="note-detail">
       <div class="note-bar">
-        <span>创建日期：1天前</span>
-        <span>更新日期：5分钟前</span>
-        <span>所属笔记本：第一个</span>
-        <span class="action">彻底删除</span>
-        <span class="action">恢复</span>
+        <span>创建日期：{{curTrashNote.createdAtFriendly}}</span>
+        <span>更新日期：{{curTrashNote.updatedAtFriendly}}</span>
+        <span>所属笔记本：{{belongTo}}</span>
+        <span class="action" @click="onDelete">彻底删除</span>
+        <span class="action" @click="onRevert">恢复</span>
       </div>
       <div class="note-title">
-        <span>第一个笔记</span>
+        <span>{{curTrashNote.title}}</span>
       </div>
       <div class="note-content">
-        <div class="preview markdown-body" v-html=""></div>
+        <div class="preview markdown-body" v-html="compileMarkdown"></div>
       </div>
     </div>
   </div>
@@ -44,7 +44,9 @@ let md = new MarkdownIt()
 export default {
   data() {
     return {
-      msg: this.$route.params.noteId
+      trashNotes: [],
+      curTrashNote: {},
+      belongTo: '第一个'
     }
   },
   created() {
@@ -55,6 +57,20 @@ export default {
         }
       })
   },
+  computed: {
+    compileMarkdown(){
+      return md.render(this.curTrashNote.content || '')
+    }
+  },
+  methods: {
+    onDelete(){
+      console.log('彻底删除')
+    },
+    onRevert(){
+      console.log('恢复')
+    }
+  },
+
 }
 </script>
 
