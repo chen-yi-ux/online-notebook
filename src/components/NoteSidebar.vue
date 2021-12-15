@@ -29,48 +29,54 @@
 </template>
 
 <script>
-import Notebooks from '@/apis/notebooks'
-import Notes from '@/apis/notes'
-import Bus from '@/helpers/bus'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
   props: ['curNote'],
   data() {
-    return {
-      notebooks: [],
-      notes: [],
-      curBook: {}
-    }
+    return {}
   },
   created() {
-    Notebooks.getAll()
-      .then(res => {
-        this.notebooks = res.data
-        this.curBook = this.notebooks.find(notebook => notebook.id === parseInt(this.$route.query.notebookId)) || this.notebooks[0] || {}
-        return Notes.getAll({notebookId: this.curBook.id})
-      }).then(res => {
-      this.notes = res.data
-      this.$emit('update:notes', this.notes)
-      Bus.$emit('update:notes', this.notes)
+    // Notebooks.getAll()
+    //   .then(res => {
+    //     this.notebooks = res.data
+    //     this.curBook = this.notebooks.find(notebook => notebook.id === parseInt(this.$route.query.notebookId)) || this.notebooks[0] || {}
+    //     return Notes.getAll({notebookId: this.curBook.id})
+    //   }).then(res => {
+    //   this.notes = res.data
+    //   this.$emit('update:notes', this.notes)
+    //   Bus.$emit('update:notes', this.notes)
+    // })
+    this.getNotebooks().then(() => {
+      this.setCurBook({curBookId: parseInt(this.$route.query.notebookId)})
+      if(this.curBook.id){ return this.getNotes({notebookId: this.curBook.id})}
     })
   },
+  computed: {
+    ...mapGetters([
+      'notebooks',
+      'notes',
+      'curBook'
+    ])
+  },
   methods: {
+    ...mapMutations([
+      'setCurBook'
+    ]),
+    ...mapActions([
+      'getNotebooks',
+      'getNotes',
+      'addNote'
+    ]),
     handleCommand(notebookId) {
-      console.log(notebookId)
       if (notebookId === 'trash') {
         return this.$router.push({path: '/trash'})
       }
-      Notes.getAll({notebookId})
-        .then(res => {
-          this.notes = res.data
-          this.$emit('update:notes', this.notes)
-        })
+      this.setCurBook({curBookId: parseInt(notebookId)})
+      this.getNotes({notebookId})
     },
     onAddNote(){
-      Notes.addNote({notebookId: this.curBook.id})
-      .then(res => {
-        this.notes.unshift(res.data)
-      })
+      this.addNote({notebookId: this.curBook.id})
     }
   }
 }

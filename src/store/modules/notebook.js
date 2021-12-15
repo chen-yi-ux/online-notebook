@@ -2,16 +2,29 @@ import Notebooks from "@/apis/notebooks"
 import {Message} from "element-ui"
 
 const state = {
-  notebooks: null
+  notebooks: null,
+  curBookId: null
 }
 
 const getters = {
-  notebooks: state => state.notebooks || {}
+  notebooks: state => state.notebooks || [],
+  curBook: state => {
+    if(!Array.isArray(state.notebooks)){
+      return {}
+    }
+    if(!state.curBookId){
+      return state.notebooks[0] || {}
+    }
+    return state.notebooks.find(notebook => notebook.id === state.curBookId) || {}
+  }
 }
 
 const mutations = {
   setNotebooks(state, payload){
     state.notebooks = payload.notebooks
+  },
+  setCurBook(state, payload){
+    state.curBookId = payload.curBookId
   },
   addNotebook(state, payload){
     state.notebooks.unshift(payload.notebook)
@@ -27,27 +40,27 @@ const mutations = {
 
 const actions = {
   getNotebooks({commit}){
-    Notebooks.getAll()
+    return Notebooks.getAll()
       .then(res =>{
         commit('setNotebooks', {notebooks: res.data})
       })
   },
   addNotebook({commit}, {title}){
-    Notebooks.addNotebook({title})
+    return Notebooks.addNotebook({title})
       .then(res => {
         commit('addNotebook', {notebook: res.data})
         Message.success(res.msg)
       })
   },
   updateNotebook({commit}, {notebookId, title}){
-    Notebooks.updateNotebook(notebookId, {title})
+    return Notebooks.updateNotebook(notebookId, {title})
       .then(res => {
         commit('updateNotebook', {notebookId, title})
         Message.success(res.msg)
       })
   },
   deleteNotebook({commit}, {notebookId}){
-    Notebooks.deleteNotebook(notebookId)
+    return Notebooks.deleteNotebook(notebookId)
       .then(res => {
         commit('deleteNotebook', {notebookId})
         Message.success(res.msg)
