@@ -24,7 +24,7 @@ const mutations = {
   setTrashNotes(state, payload){
     state.trashNotes = payload.trashNotes
   },
-  setCurTrashNote(state, payload){
+  setCurTrashNote(state, payload = {}){
     state.curTrashNoteId = payload.curTrashNoteId
   },
   addTrashNote(state, payload){
