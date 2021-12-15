@@ -38,16 +38,12 @@
 <script>
 import SideBar from "./SideBar"
 import Auth from '@/apis/auth'
-import Notebooks from '@/apis/notebooks'
-import {friendlyDate} from "@/helpers/util"
-import {Message} from 'element-ui'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   components: {SideBar},
   data() {
-    return {
-      notebooks: []
-    }
+    return {}
   },
   created() {
     Auth.getInfo()
@@ -56,13 +52,20 @@ export default {
           this.$router.push({path: '/login'})
         }
       })
-
-    Notebooks.getAll()
-      .then(res => {
-        this.notebooks = res.data
-      })
+    this.getNotebooks()
+  },
+  computed: {
+    ...mapGetters([
+      'notebooks'
+    ])
   },
   methods: {
+    ...mapActions([
+      'getNotebooks',
+      'addNotebook',
+      'updateNotebook',
+      'deleteNotebook'
+    ]),
     onCreate() {
       this.$prompt('请输入笔记本标题', '创建笔记本', {
         confirmButtonText: '确定',
@@ -70,16 +73,10 @@ export default {
         inputPattern: /^.{1,30}$/,
         inputErrorMessage: '标题不能为空，且不超过30个字符串'
       }).then(({value}) => {
-        return Notebooks.addNotebook({title: value})
-      }).then(res => {
-        res.data.createdAtFriendly = friendlyDate(res.data.createdAt)
-        res.data.noteCounts = 0
-        this.notebooks.unshift(res.data)
-        Message.success(res.msg)
+        this.addNotebook({title: value})
       })
     },
     onEdit(notebook) {
-      let title = ''
       this.$prompt('请输入笔记本标题', '修改笔记本', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -87,11 +84,7 @@ export default {
         inputValue: notebook.title,
         inputErrorMessage: '标题不能为空，且不超过30个字符串'
       }).then(({value}) => {
-        title = value
-        return Notebooks.updateNotebook(notebook.id, {title: value})
-      }).then(res => {
-        notebook.title = title
-        Message.success(res.msg)
+        this.updateNotebook({notebookId: notebook.id, title: value})
       })
     },
     onDelete(notebook) {
@@ -100,12 +93,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        return Notebooks.deleteNotebook(notebook.id)
-      }).then(res => {
-        this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
-        Message.success(res.msg)
-      }).catch(() => {
-        Message.info('取消')
+        this.deleteNotebook({notebookId: notebook.id})
       })
     }
   }
