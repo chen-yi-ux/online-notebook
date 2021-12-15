@@ -32,24 +32,15 @@
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
-  props: ['curNote'],
   data() {
     return {}
   },
   created() {
-    // Notebooks.getAll()
-    //   .then(res => {
-    //     this.notebooks = res.data
-    //     this.curBook = this.notebooks.find(notebook => notebook.id === parseInt(this.$route.query.notebookId)) || this.notebooks[0] || {}
-    //     return Notes.getAll({notebookId: this.curBook.id})
-    //   }).then(res => {
-    //   this.notes = res.data
-    //   this.$emit('update:notes', this.notes)
-    //   Bus.$emit('update:notes', this.notes)
-    // })
     this.getNotebooks().then(() => {
       this.setCurBook({curBookId: parseInt(this.$route.query.notebookId)})
       if(this.curBook.id){ return this.getNotes({notebookId: this.curBook.id})}
+    }).then(() => {
+      this.setCurNote({curNoteId: parseInt(this.$route.query.noteId)})
     })
   },
   computed: {
@@ -61,7 +52,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCurBook'
+      'setCurBook',
+      'setCurNote'
     ]),
     ...mapActions([
       'getNotebooks',

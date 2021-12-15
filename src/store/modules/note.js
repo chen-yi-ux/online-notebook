@@ -15,7 +15,7 @@ const getters = {
     if(!state.curNoteId){
       return state.notes[0] || {}
     }
-    return state.notes.find(note => note.id === curNoteId) || {}
+    return state.notes.find(note => note.id === state.curNoteId) || {}
   }
 }
 
