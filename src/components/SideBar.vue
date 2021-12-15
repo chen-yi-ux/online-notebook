@@ -18,7 +18,7 @@
         </svg>
       </router-link>
     </div>
-    <div class="logout" @click="logout">
+    <div class="logout" @click="onLogout">
       <svg>
         <use xlink:href="#icon-logout"></use>
       </svg>
@@ -28,7 +28,7 @@
 
 <script>
 import Avatar from "./Avatar"
-import Auth from '@/apis/auth'
+import {mapActions} from 'vuex'
 
 export default {
   components: {Avatar},
@@ -37,12 +37,11 @@ export default {
     }
   },
   methods: {
-    logout() {
-      Auth.logout()
-        .then(data => {
-          this.$router.push({path: 'login'})
-          console.log(data)
-        })
+    ...mapActions([
+      'logout'
+    ]),
+    onLogout() {
+      this.logout()
     }
   }
 }

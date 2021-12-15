@@ -72,8 +72,7 @@
 </template>
 
 <script>
-import Auth from "@/apis/auth"
-import Bus from '@/helpers/bus'
+import {mapActions} from 'vuex'
 
 export default {
   data() {
@@ -96,6 +95,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      loginUser: 'login',
+      registerUser: 'register'
+    }),
     showLogin() {
       this.isShowLogin = true
       this.isShowRegister = false
@@ -116,11 +119,10 @@ export default {
         return
       }
 
-      Auth.login({username: this.login.username, password: this.login.password})
-        .then(data => {
+      this.loginUser({username: this.login.username, password: this.login.password})
+        .then(() => {
           this.login.isError = false
           this.login.notice = ''
-          Bus.$emit('userInfo', {username: this.login.username})
           this.$router.push({path: 'notebooks'})
         }).catch(data => {
         this.login.isError = true
@@ -139,11 +141,10 @@ export default {
         return
       }
 
-      Auth.register({username: this.register.username, password: this.register.password})
-        .then(data => {
+      this.registerUser({username: this.register.username, password: this.register.password})
+        .then(() => {
           this.register.isError = false
           this.register.notice = ''
-          Bus.$emit('userInfo', {username: this.register.username})
           this.$router.push({path: 'notebooks'})
         }).catch(data => {
         this.register.isError = true

@@ -27,7 +27,6 @@
 
 <script>
 import NoteSidebar from "./NoteSidebar"
-import Auth from '@/apis/auth'
 import _ from 'loadsh'
 import MarkdownIt from 'markdown-it'
 import {mapGetters, mapMutations, mapActions} from 'vuex'
@@ -43,12 +42,7 @@ export default {
     }
   },
   created() {
-    Auth.getInfo()
-      .then(res => {
-        if (!res.isLogin) {
-          this.$router.push({path: '/login'})
-        }
-      })
+    this.checkLogin({path: '/login'})
     this.setCurNote({curNoteId: parseInt(this.$route.query.noteId)})
   },
   computed: {
@@ -66,7 +60,8 @@ export default {
     ]),
     ...mapActions([
       'updateNote',
-      'deleteNote'
+      'deleteNote',
+      'checkLogin'
     ]),
     onUpdateNote: _.debounce(function () {
       this.updateNote({noteId: this.curNote.id, title: this.curNote.title, content: this.curNote.content})
