@@ -6,13 +6,13 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/login',
+      path: '/',
       component: () => import('@/components/Login'),
+      alias: '/login'
     },
     {
-      path: '/',
-      component: () => import('@/components/Notebooks'),
-      alias: '/notebooks'
+      path: '/notebooks',
+      component: () => import('@/components/Notebooks')
     },
     {
       path: '/note',
