@@ -5,7 +5,9 @@
     <el-dropdown v-if="curBook.id" class="notebook-title" placement="bottom" @command="handleCommand">
       <span class="el-dropdown-link">
         {{ curBook.title }}
-        <i class="el-icon-arrow-down el-icon--right"></i>
+        <svg>
+          <use xlink:href="#icon-down"></use>
+        </svg>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="notebook in notebooks" :command="notebook.id" :key="notebook.id">
@@ -96,4 +98,8 @@ export default {
 
 <style lang="less" scoped>
 @import url(../assets/css/NoteSidebar.less);
+svg{
+  width: 14px;
+  height: 14px;
+}
 </style>
